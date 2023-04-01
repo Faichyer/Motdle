@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { SolutionType } from '../types/solution.type'
 
-type MotdleProps = {}
+type MotdleProps = {
+	solution: SolutionType
+}
 
-function useMotdle({}: MotdleProps) {
+function useMotdle({ solution }: MotdleProps) {
 	const [turn, setTurn] = useState(0)
 	const [currentGuess, setCurrentGuess] = useState('')
 	const [guesses, setGuesses] = useState([])
@@ -13,7 +16,21 @@ function useMotdle({}: MotdleProps) {
 
 	const addNewGuess = () => {}
 
-	const handleKeyup = () => {}
+	const handleKeyup = ({ key }: KeyboardEvent) => {
+		if (key === 'Enter') {
+		}
+
+		if (key === 'Backspace') {
+			setCurrentGuess((prev) => prev.slice(0, -1))
+			return
+		}
+
+		if (/^[A-Za-z]$/.test(key)) {
+			if (currentGuess.length < 5) {
+				setCurrentGuess((prev) => prev + key)
+			}
+		}
+	}
 
 	return { turn, currentGuess, guesses, isCorrect, handleKeyup }
 }

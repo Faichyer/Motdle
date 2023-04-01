@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import reactLogo from './assets/react.svg'
+import Motdle from './components/Motdle'
 
 function App() {
 	const [solution, setSolution] = useState(null)
@@ -11,7 +11,7 @@ function App() {
 				const randomSolution =
 					json[Math.floor(Math.random() * json.length)]
 
-				setSolution(randomSolution.word)
+				setSolution(randomSolution)
 			})
 	}, [])
 
@@ -20,7 +20,7 @@ function App() {
 			<h1 className="text-2xl px-5 border-b-2 border-b-slate-100 text-gray-800">
 				Motdle
 			</h1>
-			{solution && <div>Solution is: {solution}</div>}
+			{solution && <Motdle solution={solution} />}
 		</div>
 	)
 }

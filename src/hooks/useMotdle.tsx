@@ -13,7 +13,29 @@ function useMotdle({ solution }: MotdleProps) {
 	const [isCorrect, setIsCorrect] = useState(false)
 
 	const formatGuess = () => {
-		console.log('formatting the current guess - ' + currentGuess)
+		let solutionArray = [...solution.word]
+		let formattedGuess = [...currentGuess].map((letter) => {
+			return { key: letter, color: 'grey' }
+		})
+
+		formattedGuess.forEach((letter, index) => {
+			if (solutionArray[index] === letter.key) {
+				formattedGuess[index].color = 'green'
+				solutionArray[index] = '*'
+			}
+		})
+
+		formattedGuess.forEach((letter, index) => {
+			if (
+				solutionArray.includes(letter.key) &&
+				letter.color !== 'green'
+			) {
+				formattedGuess[index].color = 'yellow'
+				solutionArray[solutionArray.indexOf(letter.key)] = '*'
+			}
+		})
+
+		return formattedGuess
 	}
 
 	const addNewGuess = () => {}
@@ -36,7 +58,8 @@ function useMotdle({ solution }: MotdleProps) {
 				return
 			}
 
-			formatGuess()
+			const formatted = formatGuess()
+			console.log(formatted)
 		}
 
 		// Backspace to erase
